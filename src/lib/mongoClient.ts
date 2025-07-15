@@ -4,7 +4,6 @@ import { MongoClient } from 'mongodb';
 // Get MongoDB URI from environment variables
 const uri = process.env.MONGODB_URI || '';
 let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
 
 // Throw error if URI is missing
 if (!uri) throw new Error('Please add your MongoDB URI to .env.local');
@@ -19,7 +18,7 @@ if (!globalWithMongo._mongoClientPromise) {
   client = new MongoClient(uri);
   globalWithMongo._mongoClientPromise = client.connect();
 }
-const clientPromise: Promise<MongoClient> = globalWithMongo._mongoClientPromise;
+const clientPromise = globalWithMongo._mongoClientPromise;
 
 // Export the client promise for use in API routes
 export default clientPromise;
