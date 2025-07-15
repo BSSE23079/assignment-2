@@ -14,11 +14,8 @@ export async function POST(req: NextRequest) {
     const result = await collection.insertOne({ url, fullText });
     // Return inserted document ID
     return NextResponse.json({ insertedId: result.insertedId });
-  } catch (error) {
+  } catch (error: any) {
     // Handle errors
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-    return NextResponse.json({ error: 'Unknown error' }, { status: 500 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
